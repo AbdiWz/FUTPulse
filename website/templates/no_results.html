@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results for "{{ query }}" - FUTPulse{% endblock %}
+
+{% block content %}
+<div class="heading mt-2"> 
+    <h1>No results found</h1> 
+</div>
+
+<hr class="h-color light-hr mx-2">
+
+<div class="home-buttons"><a class="btn btn-primary" href="{{ url_for('views.home') }}">Back</a></div>
+{% endblock %}

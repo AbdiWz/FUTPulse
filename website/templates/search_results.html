@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results for "{{ query }}" - FUTPulse{% endblock %}
+
+{% block content %}
+<div class="search-results">
+    <h2>Search Results for "{{ query }}"</h2>
+
+    {% if players %}
+        <ul class="player-list">
+            {% for player in players %}
+                <li>
+                    <a href="{{ url_for('views.player_detail', player_name=player.name) }}">
+                        {{ player.name }} - {{ player.position }} | {{ player.club }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No players found matching "{{ query }}".</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -27,6 +27,7 @@ body {
     justify-content: space-between;
     padding: 0 30px 0 30px;
     box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
+    border-bottom: 2px solid #ffffff;
 }
 
 .material-symbols-outlined {
@@ -55,11 +56,13 @@ body {
     min-width: 400px;
     border-radius: 5px 5px 0 0;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25); 
+    color: #ffffff; 
+    background-color: rgba(20, 20, 20, 0.85);
 }
 
 .table thead tr {
-    background-color: #141414;
+    background-color: #333333; 
     color: #ffffff;
     text-align: left;
     font-weight: bold;
@@ -68,42 +71,38 @@ body {
 .table th,
 .table td {
     padding: 12px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); 
 }
 
 .table tbody tr {
-    border-bottom: 1px solid #dddddd;
+    background-color: rgba(243, 239, 239, 0.1); 
 }
 
 .table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+    background-color: rgba(255, 255, 255, 0.05); 
 }
 
-.table tbody tr:last-of-type {
-    border-bottom: 2px solid #595c5b;
+.table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.2); 
 }
 
 .table tbody tr.active-row {
     font-weight: bold;
-    color: #009879;
+    color: #a8d5e2; 
+}
+
+.modal-content {
+    color: #000000;
 }
 
 /* ---------- MAIN ---------- */
-.main-container-home {
-    grid-area: main;
-    overflow-y: auto;
-    padding: 20px 20px;
-    background-color: #111111;
-    color: rgba(255, 255, 255, 0.95);
-    transition: margin-left 0.5s;
-    flex: 1; 
-}
-
 .main-container{
     grid-area: main;
     overflow-y: auto;
     padding: 20px 20px;
-    background-color: #ffffff;
-    color: rgba(0, 0, 0, 0.95);
+    background: url("gradient.jpg") no-repeat center center; 
+    background-size: cover;
+    color: rgba(255, 255, 255, 0.95);
     transition: margin-left 0.5s;
     flex: 1; 
 }
@@ -122,7 +121,7 @@ h1 {
     font-size: 36px; 
 }
 
-.homepage-hr.h-color {
+.light-hr.h-color {
     border-top: 2px solid white;
     opacity: 1;
 }
@@ -142,7 +141,7 @@ h1 {
 }
 
 .custom-link {
-    color: black;      
+    color: rgb(255, 255, 255);      
     font-weight: bold;    
     text-decoration: none; 
 }
@@ -172,6 +171,38 @@ h1 {
 
 .hidden {
     display: none;
+}
+
+/* --------- SEARCH-BAR ---------- */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.search-input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    width: 300px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-button {
+    padding: 10px 15px;
+    margin-left: 5px;
+    background-color: #515151;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
 }
 
 /* --------- GALLERY ---------- */
@@ -224,6 +255,78 @@ h1 {
     font-size: 12px;
     font-weight: 400;
     text-transform: capitalize;
+}
+
+/* --------- PLAYER-DETAILS ---------- */
+.player-details-card {
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+    color: #ffffff;
+}
+
+.player-card-header h1 {
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.player-card-image-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.player-card-image {
+    width: 225px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.player-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: black;
+    border: 2px solid #ffffff;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1em;
+}
+
+.stat-label {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.stat-value {
+    color: #ffffff;
+}
+
+.player-card-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
 }
 
 /* --------- MEDIA QUERIES ---------- */

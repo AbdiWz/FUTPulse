@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, flash, request, redirect, url_for, abort
 from flask_login import login_required
 from .models import GoldPlayers, Icons
 from flask_login import current_user
+from .models import GoldPlayers
+from flask import Blueprint, render_template, flash, request, redirect, url_for, abort
 
 views = Blueprint("views", __name__)
 
@@ -12,6 +13,19 @@ def home():
     icon_data = Icons.query.limit(8).all()
     all_data = player_data + icon_data
     return render_template("home.html", player_data=player_data, icon_data=icon_data, all_data=all_data, current_user=current_user)
+
+@views.route('/search_player')
+def search_player():
+    query = request.args.get('query', '').strip()
+
+    players =GoldPlayers.query.filter(GoldPlayers.name.ilike(f"%{query}%")).all()
+
+    if len(players) == 1:
+        return redirect(url_for('views.player_detail', player_name=players[0].name))
+    elif players:
+        return render_template("search_results.html", players=players, query=query)
+    else:
+        return render_template("no_results.html", query=query)
 
 @views.route('/player/<string:player_name>')
 def player_detail(player_name):
@@ -24,7 +38,7 @@ def player_detail(player_name):
             abort(404) 
 
     return_url = url_for('views.gold_view') if player_source == "GoldPlayers" else url_for('views.icon_view')
-    return render_template('player_detail.html', player=player, player_source=player_source, return_url=return_url)
+    return render_template('player.html', player=player, player_source=player_source, return_url=return_url)
 
 @views.route('/golds')
 @login_required

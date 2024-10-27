@@ -8,90 +8,87 @@
     </div>
     <div id="profile-container" class="hidden">
             User: {{current_user.first_name}}
-            <hr class="h-color mx-2">
+            <hr class="h-color light-hr mx-2">
         <button type="button" class="btn btn-danger" onclick="window.location.href='/logout'">Logout</button>
     </div>
 </div>
 {% endblock %}
 
 {% block content %}
-	<!--Display Icons Table--> 
-	<div class="players-table">
-        <!--Heading-->
-        <div class="heading">
-            <h1>FC 25 Icons</h1>
-        </div>
-        <hr class="h-color mx-2">
-		<div class="icon_container">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Position</th>
-						<th>Rating</th>
-						<th>Nationality</th>
-						<th>Club</th>
-						<th title="FUT Pricing">Price</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for icon in icon_data %}
-						<tr>
-							<td><a href="{{ url_for('views.player_detail', player_name=icon.name) }}" class="custom-link">{{ icon.name }}</a></td>
-                            <td>{{icon.position}}</td>
-                            <td>{{icon.rating}}</td>
-                            <td>{{icon.nationality}}</td>
-                            <td>{{icon.club}}</td>
-                            <td>{{icon.price}}</td>
-							<td>
-								<a href="/update_icon/{{icon.ID}}" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modaledit{{icon.ID}}">Update</a>
-							</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
+<div class="players-table">
+	<div class="heading">
+		<h1>FC 25 Icons</h1>
 	</div>
-    <!--Update Modal-->
-	{% for icon in icon_data %}
-		<div id="modaledit{{icon.ID}}" class="modal fade" role="dialog">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title">Update Icon: {{icon.name}}</h4>
-					</div>
-					<div class="modal-body">
-						<form id="updateForm" action="{{url_for('views.update_icon')}}" method="POST" onsubmit="return confirmAndUpdate('{{icon.name}}')">
-							<!--Rating-->
-							<div class="form-group">
-								<label>Rating:</label>
-								<input type="hidden" name="id" value="{{icon.ID}}">
-								<input type="number" id="rating_input" class="form-control" name="Rating" value="{{icon.rating}}">
+	<hr class="h-color light-hr mx-2">
+	<div class="icon_container">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Position</th>
+					<th>Rating</th>
+					<th>Nationality</th>
+					<th>Club</th>
+					<th title="FUT Pricing">Price</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for icon in icon_data %}
+					<tr>
+						<td><a href="{{ url_for('views.player_detail', player_name=icon.name) }}" class="custom-link">{{ icon.name }}</a></td>
+						<td>{{icon.position}}</td>
+						<td>{{icon.rating}}</td>
+						<td>{{icon.nationality}}</td>
+						<td>{{icon.club}}</td>
+						<td>{{icon.price | comma}}</td>
+						<td>
+							<a href="/update_icon/{{icon.ID}}" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modaledit{{icon.ID}}">Update</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% for icon in icon_data %}
+	<div id="modaledit{{icon.ID}}" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Update Icon: {{icon.name}}</h4>
+				</div>
+				<div class="modal-body">
+					<form id="updateForm" action="{{url_for('views.update_icon')}}" method="POST" onsubmit="return confirmAndUpdate('{{icon.name}}')">
+
+						<div class="form-group">
+							<label>Rating:</label>
+							<input type="hidden" name="id" value="{{icon.ID}}">
+							<input type="number" id="rating_input" class="form-control" name="Rating" value="{{icon.rating}}">
+						</div>
+						
+						<div class="form-group">
+							<label>Club:</label>
+							<input type="hidden" name="id" value="{{icon.ID}}">
+							<input type="text" id="club_input" class="form-control" name="Club" value="{{icon.club}}">
+						</div>
+					
+						<div class="form-group">
+							<label>Price:</label>
+							<input type="hidden" name="id" value="{{icon.ID}}">
+							<input type="number" id="price_input" class="form-control" name="Price" value="{{icon.price}}">
+						</div>
+					
+						<div class="form-group">
+							<button class="btn btn-primary mt-4" type="submit">Update: {{icon.name}}</button>
 							</div>
-                            <!--Club-->
-							<div class="form-group">
-								<label>Club:</label>
-								<input type="hidden" name="id" value="{{icon.ID}}">
-								<input type="text" id="club_input" class="form-control" name="Club" value="{{icon.club}}">
-							</div>
-							<!--Price-->
-							<div class="form-group">
-								<label>Price:</label>
-								<input type="hidden" name="id" value="{{icon.ID}}">
-								<input type="number" id="price_input" class="form-control" name="Price" value="{{icon.price}}">
-							</div>
-							<!--Update Player-->
-							<div class="form-group">
-								<button class="btn btn-primary mt-4" type="submit">Update: {{icon.name}}</button>
-								</div>
-						</form>
-					</div>
-					<!--Footer-->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
-	{% endfor %}
+	</div>
+{% endfor %}
 {% endblock %}

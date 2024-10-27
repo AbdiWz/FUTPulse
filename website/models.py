@@ -20,7 +20,6 @@ class FUTBase(Base):
     nationality = db.Column(db.String(150), unique=True)
     club = db.Column(db.String(150), unique=True)
     price = Column(Integer)
-    image_url = db.Column(db.String(150), unique=True)
 
     def validate_price(self):
         if int(float(self.price)) <= 0:
