@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %} {{ player.name }} - FUTPulse {% endblock %}
+
+{% block content %}
+<div class="player-details">
+    <h1>{{ player.name }}</h1>
+    <div class="player-card">
+        <!-- Display the player card image -->
+        <img src="{{ url_for('static', filename='cards/' + player.name + '.png') }}"  alt="{{ player.name }}'s FUT card" class="player-card-image" />
+    </div>
+    <div class="player-stats">
+        <p><strong>Position:</strong> {{ player.position }}</p>
+        <p><strong>Rating:</strong> {{ player.rating }}</p>
+        <p><strong>Nationality:</strong> {{ player.nationality }}</p>
+        <p><strong>Club:</strong> {{ player.club }}</p>
+        <p><strong>Price:</strong> {{ player.price }}</p>
+    </div>
+    <a class="btn btn-primary" href="{{ return_url }}">Back</a>
+</div>
+{% endblock %}

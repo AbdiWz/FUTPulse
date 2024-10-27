@@ -1,0 +1,97 @@
+{% extends "base.html" %} 
+{% block title %} FC 25 Gold Players {% endblock %}
+
+{% block profile %}
+<div class="profile">
+    <div class="header-right">
+        <span class="material-symbols-outlined" onclick="toggleProfile()">account_circle</span>
+    </div>
+    <div id="profile-container" class="hidden">
+            User: {{current_user.first_name}}
+            <hr class="h-color mx-2">
+        <button type="button" class="btn btn-danger" onclick="window.location.href='/logout'">Logout</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+	<!--Display Players Table--> 
+	<div class="players-table">
+        <!--Heading-->
+        <div class="heading">
+            <h1>FC 25 Players</h1>
+        </div>
+        <hr class="h-color mx-2">
+		<div class="gold_container">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Position</th>
+						<th>Rating</th>
+						<th>Nationality</th>
+						<th>Club</th>
+						<th title="FUT Pricing">Price</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for player in player_data %}
+						<tr>
+							<td><a href="{{ url_for('views.player_detail', player_name=player.name) }}" class="custom-link">{{ player.name }}</a></td>
+                            <td>{{player.position}}</td>
+                            <td>{{player.rating}}</td>
+                            <td>{{player.nationality}}</td>
+                            <td>{{player.club}}</td>
+                            <td>{{player.price}}</td>
+							<td>
+								<a href="/update_gold/{{player.ID}}" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modaledit{{player.ID}}">Update</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+    <!--Update Modal-->
+	{% for player in player_data %}
+		<div id="modaledit{{player.ID}}" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Update Player: {{player.name}}</h4>
+					</div>
+					<div class="modal-body">
+						<form id="updateForm" action="{{url_for('views.update_gold')}}" method="POST" onsubmit="return confirmAndUpdate('{{player.name}}')">
+							<!--Rating-->
+							<div class="form-group">
+								<label>Rating:</label>
+								<input type="hidden" name="id" value="{{player.ID}}">
+								<input type="number" id="rating_input" class="form-control" name="Rating" value="{{player.rating}}">
+							</div>
+                            <!--Club-->
+							<div class="form-group">
+								<label>Club:</label>
+								<input type="hidden" name="id" value="{{player.ID}}">
+								<input type="text" id="club_input" class="form-control" name="Club" value="{{player.club}}">
+							</div>
+							<!--Price-->
+							<div class="form-group">
+								<label>Price:</label>
+								<input type="hidden" name="id" value="{{player.ID}}">
+								<input type="number" id="price_input" class="form-control" name="Price" value="{{player.price}}">
+							</div>
+							<!--Update Player-->
+							<div class="form-group">
+								<button class="btn btn-primary mt-4" type="submit">Update: {{player.name}}</button>
+								</div>
+						</form>
+					</div>
+					<!--Footer-->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+{% endblock %}
